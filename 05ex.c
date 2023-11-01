@@ -20,6 +20,12 @@ Canvas recursive_line(Canvas c, int x, int y, int width) {
     if (width == 0) {
         return c;
     }
+    int x_to_mark = x + width - 1;
+    if(0 <= x_to_mark && x_to_mark < canvas_width(c))
+    {
+        c = canvas_set_black(c, x_to_mark, y);
+    }
+    c = recursive_line(c, x, y, width - 1);
     return c;
 }
 
@@ -30,6 +36,14 @@ Zeichnen Sie ein Rechteck mit der Breite `width` und der Höhe `height`. Der Pix
 _Benutzen Sie keine Schleifen, die Aufgabe soll über Rekursion gelöst werden!_
 */
 Canvas recursive_rectangle(Canvas c, int x, int y, int width, int height) {
+    // if(width <= 0 || height <= 0){
+    //     return c;
+    // }
+    // printf("width: %d, height: %d\n", width, height);
+    // c = recursive_rectangle(c, x, y, width - 1, height);
+    // if (width > 1) {
+    //     c = recursive_rectangle(c, x, y, width, height - 1);
+    // }
     return c;
 }
 
@@ -74,7 +88,10 @@ nicht-negativen, ganzzahligen Exponenten `exp`.
 _Benutzen Sie keine Schleifen, die Aufgabe soll über Rekursion gelöst werden!_
 */
 int power(int b, int exp){
-   return 0;
+    if(exp == 0){
+        return 1;
+    }
+   return b * power(b, exp - 1);
 }
 
 /*
@@ -84,6 +101,10 @@ Diese Funktion soll den Sierpinski Carpet der Ordnung `n` auf die Canvas zeichne
 _Benutzen Sie keine Schleifen, die Aufgabe soll über Rekursion gelöst werden!_
 */
 Canvas sierpinski_carpet(Canvas c, int n, int x, int y){
+    // if(n == 1)
+    // {
+    //     return canvas_set_black(c, x, y);
+    // }
     return c;
 }
 
@@ -97,5 +118,50 @@ zu vier direkte Nachbarn - die Diagonalen zählen nicht.
 Funktionen, um die Farbe eines Pixels auf der Canvas zu bestimmen, sind im Headerfile der Canvas dokumentiert.
 */
 Canvas bucket_fill(Canvas c, int x, int y) {
+    if(pixel_is_black(c, x, y))
+    {
+        c = canvas_set_white(c, x, y);
+        for (int x_surrounding = x-1; x_surrounding < x+2; x_surrounding++)
+        {
+            for (int y_surrounding = y-1; y_surrounding < y+2; y_surrounding++)
+            {
+                if(
+                    x_surrounding != x
+                    && y_surrounding != y
+                    && x_surrounding >= 0
+                    && y_surrounding >= 0
+                    && x_surrounding < canvas_width(c)
+                    && y_surrounding < canvas_height(c)
+                    && pixel_is_black(c, x_surrounding, y_surrounding)
+                )
+                {
+                    c = bucket_fill(c, x_surrounding, y_surrounding);
+                }
+            }
+        }
+    }
+    else if(pixel_is_white(c, x, y))
+    {
+        c = canvas_set_black(c, x, y);
+        for (int x_surrounding = x-1; x_surrounding < x+2; x_surrounding++)
+        {
+            for (int y_surrounding = y-1; y_surrounding < y+2; y_surrounding++)
+            {
+                printf("x: %d, y: %d\n", x_surrounding, y_surrounding);
+                if(
+                    x_surrounding != x
+                    && y_surrounding != y
+                    && x_surrounding >= 0
+                    && y_surrounding >= 0
+                    && x_surrounding < canvas_width(c)
+                    && y_surrounding < canvas_height(c)
+                    && pixel_is_white(c, x_surrounding, y_surrounding)
+                )
+                {
+                    c = bucket_fill(c, x_surrounding, y_surrounding);
+                }
+            }
+        }
+    }
     return c;
 }
