@@ -166,7 +166,14 @@ Aufgabe 2c:
 Färben Sie alle Pixel der Canvas schwarz.
 */
 Canvas paint_it_black(Canvas c) {
-    canvas_set_black(c,canvas_width(c),canvas_height(c));
+    for (int x = 0; x < canvas_width(c); x++)
+    {
+        for (int y = 0; y < canvas_height(c); y++)
+        {
+            c = canvas_set_black(c, x, y);
+        }
+        
+    }
     return c;
 }
 
@@ -178,6 +185,17 @@ und schauen sich das erwartete Ergebnis an).
 Falls eine Reihe nicht breit genug ist, färben Sie alle Pixel dieser Reihe schwarz.
 */
 Canvas descending_diagonal(Canvas c) {
+    for (int x = 0; x < canvas_width(c); x++)
+    {
+        for (int y = 0; y < canvas_height(c); y++)
+        {
+            if(x < canvas_height(c) - y)
+            {
+                c = canvas_set_black(c, x, y);
+            }
+        }
+        
+    }
     return c;
 }
 
@@ -188,6 +206,16 @@ Koordinaten `(x, y)`. Die Breite des Rechtecks ist `width`, und die Höhe ist `h
 auf die Canvas passt, sollen einfach die Teile ignoriert werden welche außerhalb liegen würden.
 */
 Canvas draw_rectangle(Canvas c, int x, int y, int width, int height) {
+    for (int real_x = x; real_x < x + width; real_x++)
+    {
+        for (int real_y = y; real_y > y - height; real_y--)
+        {
+            if(real_x < canvas_width(c) && real_y < canvas_height(c) && real_x >= 0 && real_y >= 0)
+            {
+                c = canvas_set_black(c, real_x, real_y);
+            }
+        }
+    }
     return c;
 }
 
@@ -201,5 +229,17 @@ Tipp: Ob Sie diese Funktion von Grund auf implementieren oder `draw_rectangle` v
 Wir empfehlen beides auszuprobieren und selbst zu entscheiden welche Lösung Sie eleganter finden.
 */
 Canvas draw_rectangle_via_corners(Canvas c, int x0, int y0, int x1, int y1) {
+    int width = x1 - x0;
+    int height = y0 - y1;
+    for (int x = x0; x <= x0 + width; x++)
+    {
+        for (int y = y0; y >= y0 - height; y--)
+        {
+            if(x < canvas_width(c) && y < canvas_height(c) && x >= 0 && y >= 0)
+            {
+                c = canvas_set_black(c, x, y);
+            }
+        }
+    }
     return c;
 }
