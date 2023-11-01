@@ -180,7 +180,7 @@ int tens_place(int n) {
     Tipp: der `/` Operator sollte vermutlich in der Lösung auftauchen.
     */
     /* BEGIN CHANGES */
-    result = n%100;
+    result = (n%100 - n%10) / 10;
     /* END CHANGES */
     return result;
 }
