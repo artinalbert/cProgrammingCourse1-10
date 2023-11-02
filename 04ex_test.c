@@ -298,6 +298,12 @@ int main(int argc, char const *argv[]) {
             printf(TESTRUNNER_LABEL "Für Aufgabe 2a gibt es keine Tests von uns! Für mehr Details lesen Sie bitte "
                                     "Aufgabe 2b.\n");
         }
+        // Custom Test Case
+        // if (begin_testcase(&tester)) {
+        //     assert_int(&tester, 0, hailstone(1), "");
+        //     assert_int(&tester, 2, hailstone(4), "");
+        //     assert_int(&tester, 5, hailstone(5), "");
+        // }
     }
     /* Aufgabe 2b */
     if (begin_exercise(&tester, "bring_your_own_tests", "Aufgabe 2b: Informationen zu 2a.")) {

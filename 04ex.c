@@ -24,6 +24,18 @@ Headerfile und die zugehörige Implementierung sind bereits eingebunden, die Fun
 also einfach verwendet werden.
 */
 Canvas draw_odd_circle(Canvas c, int x, int y, int radius_from_middle) {
+    for (size_t current_x = 0; current_x < canvas_width(c); current_x++)
+    {
+        for (size_t current_y = 0; current_y < canvas_height(c); current_y++)
+        {
+            if (distance(x, y, current_x, current_y) <= radius_from_middle)
+            {
+                c = canvas_set_black(c, current_x, current_y);
+            }
+            
+        }
+        
+    }
     return c;
 }
 
@@ -37,7 +49,9 @@ Die Datei `04ex_helpers.h` mit den Hilsfunktionen enthält eine Funktion `square
 Distanz zu berechnen.
 */
 int my_distance(int x0, int y0, int x1, int y1) {
-    return 0;
+    int a = x1 - x0;
+    int b = y1 - y0;
+    return squareroot(a * a + b * b);
 }
 
 /*
@@ -47,7 +61,12 @@ Tipp: Finden Sie die größte natürliche Zahl, deren Quadrat kleiner oder gleic
 testen nur mit relativ kleinen Zahlen.
 */
 int my_squareroot(int n) {
-    return 0;
+    int pre_nr = 0;
+    while((pre_nr + 1) * (pre_nr + 1) <= n)
+    {
+        pre_nr++;
+    }
+    return pre_nr;
 }
 
 /*
@@ -64,6 +83,19 @@ Für Kreise mit _geradem_ Durchmesser rufen Sie Ihre `draw_odd_circle` vier mal 
 welche den exakten Mittelpunkt des erwünschten Kreises umgeben.
 */
 Canvas draw_circle(Canvas c, int x, int y, int diameter) {
+    int radius = diameter * 0.49;
+    if(diameter % 2 == 0)
+    {
+        c = draw_odd_circle(c, x + diameter, y+radius, radius);
+        // c = draw_odd_circle(c, x+radius-1, y+radius, radius+1);
+        // c = draw_odd_circle(c, x+radius, y+radius-1, radius+1);
+        // c = draw_odd_circle(c, x+radius-1, y+radius-1, radius+1);
+    }
+    else
+    {
+        c = draw_odd_circle(c, x+radius, y+radius, radius);
+    }
+    
     return c;
 }
 
@@ -74,7 +106,7 @@ Kreisezeichnen implementiert. Das ist ziemlich cool!
 Geben Sie zur Feier `5` zurück.
 */
 int high_five() {
-    return 0;
+    return 5;
 }
 
 /*
@@ -86,7 +118,20 @@ Zum Beispiel `hailstone(1) == 0`, `hailstone(4) == 2` (4 -> 2 -> 1), und `hailst
 Berechnen Sie die Hailstone-Zahl vom Parameter `n`.
 */
 int hailstone(int n) {
-    return 0;
+    int hailstone_nr = 0;
+    while (n != 1)
+    {
+        if(n % 2 == 0)
+        {
+            n = n / 2;
+        }
+        else
+        {
+            n = n * 3 + 1;
+        }
+        hailstone_nr++;
+    }
+    return hailstone_nr;
 }
 
 /*
@@ -100,5 +145,5 @@ allerdings Ihre eigenen Tests schreiben.
 Lassen Sie `99` von dieser Funktion zurückgeben um zu zeigen, dass Sie das verstanden haben.
 */
 int bring_your_own_tests() {
-    return 0;
+    return 99;
 }
