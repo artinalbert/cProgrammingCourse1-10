@@ -10,7 +10,7 @@ cc -std=c11 -g -Wall 03ex_test.c -o 03ex_test.o -lm && ./03ex_test.o
 
 /* Die folgenden Zeilen enthalten einige C-Notwendigkeiten die Sie momentan ignorieren können. */
 #include "03_canvas.h"
-#include <stdio.h> 
+#include <stdio.h>
 /* Hier enden die Dinge, die Sie ignorieren können */
 
 /*
@@ -20,7 +20,7 @@ Innerhalb dieses Aufgabenblattes können Sie diese Funktion frei verwenden. Ein 
 `is_multiple_of(n, 2)` sein. Dieser gäbe `1` zurück wenn `n` gerade ist, und `0` wenn `n` ungerade ist.
 
 Für dieses und alle weiteren Aufgabenblätter animieren wir Sie, selbstständig Funktionen zu schreiben um Teilprobleme zu lösen.
-Sie können zum Beispiel `is_multiple_of` in mehreren Aufgaben auf diesem Blatt verwenden. Wenn wir die nicht vordefiniert hätten, 
+Sie können zum Beispiel `is_multiple_of` in mehreren Aufgaben auf diesem Blatt verwenden. Wenn wir die nicht vordefiniert hätten,
 hätte es sich für Sie gelohnt, sie selbst zu definieren.
 Teilprobleme zu identifizieren und losgelöst vom ursprünglichen Kontext als Hilfsfunktion zu implementierem ist
 ein großer Teil von kompetentem Programmieren.
@@ -166,7 +166,14 @@ Aufgabe 2c:
 Färben Sie alle Pixel der Canvas schwarz.
 */
 Canvas paint_it_black(Canvas c) {
-    canvas_set_black(c,canvas_width(c),canvas_height(c));
+for(int i=0;i<canvas_width(c);i++){
+    for (int j=0;j < canvas_height(c); j++)
+    {
+        canvas_set_black(c,i,j);
+    }
+
+}
+
     return c;
 }
 
@@ -177,7 +184,19 @@ ersten drei der dritten Reihe und so weiter (falls das unklar war, führen Sie e
 und schauen sich das erwartete Ergebnis an).
 Falls eine Reihe nicht breit genug ist, färben Sie alle Pixel dieser Reihe schwarz.
 */
+//check Freeform
 Canvas descending_diagonal(Canvas c) {
+for (int x = 0 ;  x< canvas_width(c); x++)
+{
+    for (int y = 0 ; y< canvas_height(c); y++)
+    {
+        if(x<canvas_height(c)-y){
+            canvas_set_black(c,x,y);
+        }
+
+    }
+
+}
     return c;
 }
 
