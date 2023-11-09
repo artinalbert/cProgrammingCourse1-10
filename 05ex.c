@@ -9,6 +9,15 @@ cc -std=c11 -g -Wall 05ex_test.c -o 05ex_test.o -lm && ./05ex_test.o
 #include <stdio.h>
 #include <math.h>
 
+int valid_coordinate(Canvas c, int x, int y) {
+    return (
+        0 <= x
+        && 0 <= y
+        && x < canvas_width(c)
+        && y < canvas_height(c)
+    );
+}
+
 /*
 Aufgabe 1a:
 Zeichnen Sie eine horizontale Linie der Länge `width`, deren am weitesten links liegender Pixel bei `(x, y)` ist.
@@ -21,7 +30,7 @@ Canvas recursive_line(Canvas c, int x, int y, int width) {
         return c;
     }
     int x_to_mark = x + width - 1;
-    if(0 <= x_to_mark && x_to_mark < canvas_width(c))
+    if(valid_coordinate(c, x_to_mark, y))
     {
         c = canvas_set_black(c, x_to_mark, y);
     }
@@ -36,14 +45,25 @@ Zeichnen Sie ein Rechteck mit der Breite `width` und der Höhe `height`. Der Pix
 _Benutzen Sie keine Schleifen, die Aufgabe soll über Rekursion gelöst werden!_
 */
 Canvas recursive_rectangle(Canvas c, int x, int y, int width, int height) {
-    // if(width <= 0 || height <= 0){
-    //     return c;
-    // }
-    // printf("width: %d, height: %d\n", width, height);
-    // c = recursive_rectangle(c, x, y, width - 1, height);
-    // if (width > 1) {
-    //     c = recursive_rectangle(c, x, y, width, height - 1);
-    // }
+    if(width <= 0 || height <= 0)
+    {
+        return c;
+    }
+    
+    if(width == 1)
+    {
+        if(valid_coordinate(c, x, y))
+        {
+            c = canvas_set_black(c, x, y);
+        }
+        c = recursive_rectangle(c, x, y+1, 1, height-1);
+    }
+    else
+    {
+        c = recursive_rectangle(c, x, y, 1, height);
+        c = recursive_rectangle(c, x+1, y, width-1, height);
+    }
+
     return c;
 }
 
@@ -101,10 +121,20 @@ Diese Funktion soll den Sierpinski Carpet der Ordnung `n` auf die Canvas zeichne
 _Benutzen Sie keine Schleifen, die Aufgabe soll über Rekursion gelöst werden!_
 */
 Canvas sierpinski_carpet(Canvas c, int n, int x, int y){
-    // if(n == 1)
-    // {
-    //     return canvas_set_black(c, x, y);
-    // }
+    if(n == 0)
+    {
+        return canvas_set_black(c, x, y);
+    }
+    float thirds = power(3, n) / 3.0;
+    c = sierpinski_carpet(c, n-1, x, y);
+    c = sierpinski_carpet(c, n-1, x+thirds, y);
+    c = sierpinski_carpet(c, n-1, x+(thirds*2), y);
+    c = sierpinski_carpet(c, n-1, x, y+thirds);
+    // Leaving middle empty
+    c = sierpinski_carpet(c, n-1, x+(thirds*2), y+thirds);
+    c = sierpinski_carpet(c, n-1, x, y+(thirds*2));
+    c = sierpinski_carpet(c, n-1, x+thirds, y+(thirds*2));
+    c = sierpinski_carpet(c, n-1, x+(thirds*2), y+(thirds*2));
     return c;
 }
 
@@ -147,7 +177,7 @@ Canvas bucket_fill(Canvas c, int x, int y) {
         {
             for (int y_surrounding = y-1; y_surrounding < y+2; y_surrounding++)
             {
-                printf("x: %d, y: %d\n", x_surrounding, y_surrounding);
+                // printf("x: %d, y: %d\n", x_surrounding, y_surrounding);
                 if(
                     x_surrounding != x
                     && y_surrounding != y
