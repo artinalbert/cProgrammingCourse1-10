@@ -3,17 +3,16 @@
 #include "introprog_countsort.h"
 #include "arrayio.h"
 
-
 /*
     Funktion liest einen String ein und wandelt diesen in den Datentypen
     SortDirection um
 
     return SortDirection
 */
-SortDirection extract_order_direction(char *order){
+SortDirection extract_order_direction(char *order)
+{
 
-
-    //return SortDirection;
+    // return SortDirection;
 }
 /*
     Funktion erstellt auf Basis der Statistik die Ausgabe
@@ -26,9 +25,10 @@ void count_sort_write_output_array(int output_array[], int count_array[], SortDi
     int len = MAX_VALUE;
     if (order == ASCENDING)
     {
-        int k = 1;
+        int k = 0;
         for (int j = 0; j < len; j++)
         {
+            int currentCount = count_array[j];
             for (int i = 0; i < count_array[j]; i++)
             {
                 output_array[k] = j;
@@ -39,7 +39,7 @@ void count_sort_write_output_array(int output_array[], int count_array[], SortDi
     else if (order == DESCENDING)
     {
         int k = 1;
-        //len - 1 because count_array[j]
+        // len - 1 because count_array[j]
         for (int j = len - 1; j >= 0; j--)
         {
             for (int i = 0; i < count_array[j]; i++)
@@ -75,12 +75,20 @@ void count_sort(int input_array[], int len, int output_array[], SortDirection or
     // int c[len];
     // int c[INT_MAX];
     int c[MAX_VALUE];
+
+    for (int i = 0; i < MAX_VALUE; i++)
+    {
+        c[i] = 0;
+    }
+    printf("Count Array:");
+    print_array(c, MAX_VALUE);
     // for (int j = 0; j < len; j++)
     // {
     //     c[input_array[j]] = c[input_array[j]] + 1;
     // }
     count_sort_calculate_counts(input_array, len, c);
-
+    printf("Count Array:");
+    print_array(c, MAX_VALUE);
     // int k = 1;
     // for (int j = 0; j < len; j++)
     // {
@@ -139,12 +147,14 @@ int main(int argc, char *argv[])
      * Hier count_sort aufrufen und alle nötigen Deklarationen einfügen!
      */
     int output_array[len];
-    count_sort(input_array,len,output_array,ASCENDING);
+    printf("Sortiertes Array; after initialization:");
+    print_array(output_array, len);
+    count_sort(input_array, len, output_array, ASCENDING);
 
     printf("Sortiertes Array:");
 
     /* Folgende Zeile einkommentieren, um das Array auszugeben! */
-     print_array(output_array, len);
+    print_array(output_array, len);
 
     return 0;
 }
