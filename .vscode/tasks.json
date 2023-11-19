@@ -2,12 +2,13 @@
     "tasks": [
         {
             "type": "cppbuild",
-            "label": "C/C++: cc Aktive Datei kompilieren",
+            "label": "compile",
             "command": "/usr/bin/cc",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${workspaceFolder}/*ex_test.c",
+                "${workspaceFolder}/introprog_countsort.c",
+                "${workspaceFolder}/arrayio.c",
                 "-o",
                 "${workspaceFolder}/debug_ex_test.o",
                 "-Wall",
