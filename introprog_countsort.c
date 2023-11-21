@@ -11,8 +11,12 @@
 */
 SortDirection extract_order_direction(char *order)
 {
+// for (size_t i = 0; i < count; i++)
+// {
+//     if(*order )
+// }
 
-    // return SortDirection;
+//     return SortDirection;
 }
 /*
     Funktion erstellt auf Basis der Statistik die Ausgabe
@@ -22,7 +26,7 @@ SortDirection extract_order_direction(char *order)
 */
 void count_sort_write_output_array(int output_array[], int count_array[], SortDirection order)
 {
-    int len = MAX_VALUE;
+    int len = MAX_VALUE+1;
     if (order == ASCENDING)
     {
         int k = 0;
@@ -74,21 +78,22 @@ void count_sort(int input_array[], int len, int output_array[], SortDirection or
 {
     // int c[len];
     // int c[INT_MAX];
-    int c[MAX_VALUE];
+    //we go from 0 to 100
+    int c[MAX_VALUE+1];
 
-    for (int i = 0; i < MAX_VALUE; i++)
+    for (int i = 0; i < MAX_VALUE+1; i++)
     {
         c[i] = 0;
     }
     printf("Count Array:");
-    print_array(c, MAX_VALUE);
+    print_array(c, MAX_VALUE+1);
     // for (int j = 0; j < len; j++)
     // {
     //     c[input_array[j]] = c[input_array[j]] + 1;
     // }
     count_sort_calculate_counts(input_array, len, c);
     printf("Count Array:");
-    print_array(c, MAX_VALUE);
+    print_array(c, MAX_VALUE+1);
     // int k = 1;
     // for (int j = 0; j < len; j++)
     // {
@@ -148,7 +153,7 @@ int main(int argc, char *argv[])
      */
     int output_array[len];
     printf("Sortiertes Array; after initialization:");
-    print_array(output_array, len);
+    //print_array(output_array, len);
     count_sort(input_array, len, output_array, ASCENDING);
 
     printf("Sortiertes Array:");
